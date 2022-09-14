@@ -4,7 +4,15 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/vue@3"></script>
     <!--<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>-->
+    
+    <script>module = {}</script>
+    <script src="travelang.js"></script>
+    <script>travelang=module.exports.parse;SyntaxError=module.exports.SyntaxError</script>
+    
+    <script src="script.js"></script>
 </head>
 <body>
+<input id="input" type="text" onkeydown="if(event.keyCode == 13) run(this.value)">
+<pre id="output"></pre>
 </body>
 </html>
