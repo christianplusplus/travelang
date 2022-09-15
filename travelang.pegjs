@@ -9,6 +9,8 @@
         return sum;
     };
     function rollTable(table_name) {
+        return table_name;
+    
         var table = window[table_name];
         return table[Math.floor(Math.random() * table.length)];
     };
@@ -46,7 +48,7 @@ dice_expression
 = quantity:[0-9]* 'd'i faces:[0-9]+ {var qty = joinInt(quantity); var size = joinInt(faces); return rollDice(Number.isNaN(qty) ? 1 : qty, size)}
 
 table_expression
-= 'table' {return 'You come to a stream filled with fish.'}
+= a:([A-Z_]i[A-Z_0-9]i*) {return rollTable(a.join(''))}
 
 _ "optional whitespace"
 = [ \t\n\r]*
