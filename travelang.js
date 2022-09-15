@@ -174,7 +174,7 @@ function peg$parse(input, options) {
       peg$c30 = function(quantity, faces) {var qty = joinInt(quantity); var size = joinInt(faces); return rollDice(Number.isNaN(qty) ? 1 : qty, size)},
       peg$c31 = /^[A-Z_]/i,
       peg$c32 = peg$classExpectation([["A", "Z"], "_"], false, true),
-      peg$c33 = function(a) {return rollTable(a.join(''))},
+      peg$c33 = function(a, b) {return rollTable(a + b.join(''))},
       peg$c34 = peg$otherExpectation("optional whitespace"),
       peg$c35 = /^[ \t\n\r]/,
       peg$c36 = peg$classExpectation([" ", "\t", "\n", "\r"], false, false),
@@ -841,52 +841,47 @@ function peg$parse(input, options) {
   }
 
   function peg$parsetable_expression() {
-    var s0, s1, s2, s3, s4;
+    var s0, s1, s2, s3;
 
     s0 = peg$currPos;
-    s1 = peg$currPos;
     if (peg$c31.test(input.charAt(peg$currPos))) {
-      s2 = input.charAt(peg$currPos);
+      s1 = input.charAt(peg$currPos);
       peg$currPos++;
     } else {
-      s2 = peg$FAILED;
+      s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c32); }
     }
-    if (s2 !== peg$FAILED) {
-      s3 = [];
+    if (s1 !== peg$FAILED) {
+      s2 = [];
       if (peg$c25.test(input.charAt(peg$currPos))) {
-        s4 = input.charAt(peg$currPos);
+        s3 = input.charAt(peg$currPos);
         peg$currPos++;
       } else {
-        s4 = peg$FAILED;
+        s3 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$c26); }
       }
-      while (s4 !== peg$FAILED) {
-        s3.push(s4);
+      while (s3 !== peg$FAILED) {
+        s2.push(s3);
         if (peg$c25.test(input.charAt(peg$currPos))) {
-          s4 = input.charAt(peg$currPos);
+          s3 = input.charAt(peg$currPos);
           peg$currPos++;
         } else {
-          s4 = peg$FAILED;
+          s3 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c26); }
         }
       }
-      if (s3 !== peg$FAILED) {
-        s2 = [s2, s3];
-        s1 = s2;
+      if (s2 !== peg$FAILED) {
+        peg$savedPos = s0;
+        s1 = peg$c33(s1, s2);
+        s0 = s1;
       } else {
-        peg$currPos = s1;
-        s1 = peg$FAILED;
+        peg$currPos = s0;
+        s0 = peg$FAILED;
       }
     } else {
-      peg$currPos = s1;
-      s1 = peg$FAILED;
+      peg$currPos = s0;
+      s0 = peg$FAILED;
     }
-    if (s1 !== peg$FAILED) {
-      peg$savedPos = s0;
-      s1 = peg$c33(s1);
-    }
-    s0 = s1;
 
     return s0;
   }
@@ -968,10 +963,12 @@ function peg$parse(input, options) {
           return sum;
       };
       function rollTable(table_name) {
-          return table_name;
-      
-          var table = window[table_name];
-          return table[Math.floor(Math.random() * table.length)];
+          var table = tables[table_name];
+          var index = Math.floor(Math.random() * table.length);
+          var entry = table[index];
+          while(entry === undefined && index < table.length)
+              entry = table[++index];
+          return entry();
       };
 
 

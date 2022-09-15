@@ -9,10 +9,12 @@
         return sum;
     };
     function rollTable(table_name) {
-        return table_name;
-    
-        var table = window[table_name];
-        return table[Math.floor(Math.random() * table.length)];
+        var table = tables[table_name];
+        var index = Math.floor(Math.random() * table.length);
+        var entry = table[index];
+        while(entry === undefined && index < table.length)
+            entry = table[++index];
+        return entry();
     };
 }
 
@@ -49,7 +51,7 @@ dice_expression
 = quantity:[0-9]* 'd'i faces:[0-9]+ {var qty = joinInt(quantity); var size = joinInt(faces); return rollDice(Number.isNaN(qty) ? 1 : qty, size)}
 
 table_expression
-= a:([A-Z_]i[A-Z_0-9]i*) {return rollTable(a.join(''))}
+= a:[A-Z_]i b:[A-Z_0-9]i* {return rollTable(a + b.join(''))}
 
 _ "optional whitespace"
 = [ \t\n\r]*
