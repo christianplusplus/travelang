@@ -43,7 +43,7 @@ unit
 value
 = a:dice_expression {return a}
 / a:[0-9]+ {return joinInt(a)}
-/ a:($[A-Z_0-9]i+) {return window[a.join('')]}
+/ a:('$'[A-Z_0-9]i+) {return window[a.join('')]}
 
 dice_expression
 = quantity:[0-9]* 'd'i faces:[0-9]+ {var qty = joinInt(quantity); var size = joinInt(faces); return rollDice(Number.isNaN(qty) ? 1 : qty, size)}
