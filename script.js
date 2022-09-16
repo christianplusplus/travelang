@@ -1,3 +1,8 @@
 function run(text) {
-    document.getElementById("output").innerHTML = travelang.parse(text);
+    try{
+        document.getElementById('output').innerHTML = travelang.parse(text);
+    }
+    catch(e) {
+        throw e;
+    }
 }

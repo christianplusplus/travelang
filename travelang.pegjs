@@ -51,10 +51,15 @@ dice_expression
 = quantity:[0-9]* 'd'i faces:[0-9]+ {var qty = joinInt(quantity); var size = joinInt(faces); return rollDice(Number.isNaN(qty) ? 1 : qty, size)}
 
 table_expression
-= a:[A-Z_]i b:[A-Z_0-9]i* {return rollTable(a + b.join(''))}
+= a:(
+  'name_beginning'i
+/ 'name_middle'i
+/ 'name_end'i
+/ 'name'i
+) {return rollTable(a.toLowerCase())}
 
-_ "optional whitespace"
+_ 'optional whitespace'
 = [ \t\n\r]*
 
-__ "manditory whitespace"
+__ 'manditory whitespace'
 = [ \t\n\r]+
