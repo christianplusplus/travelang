@@ -25,14 +25,24 @@ roll_statement
 = 'roll'i __ a:(math_expression / table_expression) {return a}
 
 math_expression
-= a:term _ '+' _ b:math_expression {return a + b}
-/ a:term _ '-' _ b:math_expression {return a - b}
-/ a:term {return a}
+= a:term b:(_ ('+' / '-') _ term)* {return b.reduce((acc, tokens) => {
+        switch(tokens[1]) {
+            case '+':
+                return acc + tokens[3];
+            case '-':
+                return acc - tokens[3];
+        }
+    }, a)}
 
 term
-= a:factor _ '*' _ b:term {return a * b}
-/ a:factor _ '/' _ b:term {return a / b}
-/ a:factor {return a}
+= a:factor b:(_ ('*' / '/') _ factor)* {return b.reduce((acc, tokens) => {
+        switch(tokens[1]) {
+            case '*':
+                return acc * tokens[3];
+            case '/':
+                return acc / tokens[3];
+        }
+    }, a)}
 
 factor
 = '-' _ a:unit {return -a}
