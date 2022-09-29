@@ -1,4 +1,4 @@
-tables = {
+namespce tables {
     name_beginning : [
         undefined,
         undefined,

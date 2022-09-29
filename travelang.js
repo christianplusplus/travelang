@@ -201,9 +201,11 @@ function peg$parse(input, options) {
       peg$c43 = peg$literalExpectation("name_middle", true),
       peg$c44 = "name_end",
       peg$c45 = peg$literalExpectation("name_end", true),
-      peg$c46 = "name",
-      peg$c47 = peg$literalExpectation("name", true),
-      peg$c48 = function(a) {return a.toLowerCase()},
+      peg$c46 = "dice6",
+      peg$c47 = peg$literalExpectation("dice6", true),
+      peg$c48 = "name",
+      peg$c49 = peg$literalExpectation("name", true),
+      peg$c50 = function(a) {return a.toLowerCase()},
 
       peg$currPos          = 0,
       peg$savedPos         = 0,
@@ -1066,19 +1068,28 @@ function peg$parse(input, options) {
           if (peg$silentFails === 0) { peg$fail(peg$c45); }
         }
         if (s1 === peg$FAILED) {
-          if (input.substr(peg$currPos, 4).toLowerCase() === peg$c46) {
-            s1 = input.substr(peg$currPos, 4);
-            peg$currPos += 4;
+          if (input.substr(peg$currPos, 5).toLowerCase() === peg$c46) {
+            s1 = input.substr(peg$currPos, 5);
+            peg$currPos += 5;
           } else {
             s1 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c47); }
+          }
+          if (s1 === peg$FAILED) {
+            if (input.substr(peg$currPos, 4).toLowerCase() === peg$c48) {
+              s1 = input.substr(peg$currPos, 4);
+              peg$currPos += 4;
+            } else {
+              s1 = peg$FAILED;
+              if (peg$silentFails === 0) { peg$fail(peg$c49); }
+            }
           }
         }
       }
     }
     if (s1 !== peg$FAILED) {
       peg$savedPos = s0;
-      s1 = peg$c48(s1);
+      s1 = peg$c50(s1);
     }
     s0 = s1;
 
