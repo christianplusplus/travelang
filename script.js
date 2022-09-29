@@ -1,8 +1,14 @@
 function run(text) {
     try{
-        document.getElementById('output').innerHTML = travelang.parse(text);
+        var output = travelang.parse(text);
+        if(output instanceof Array)
+            output = output.reduce((acc, val) => acc + '\n' + val);
+        document.getElementById('output').innerHTML = output;
     }
     catch(e) {
-        throw e;
+        if(e instanceof travelang.SyntaxError)
+            document.getElementById('output').innerHTML = e.message;
+        else
+            throw e;
     }
 }

@@ -16,13 +16,39 @@
             entry = table[++index];
         return entry();
     };
+    function listTable(table_name) {
+        var table = tables[table_name];
+        
+        var table_list = [];
+        var count = 1;
+        table.forEach(entry => {
+                if(entry === undefined) {
+                    count++;
+                }
+                else {
+                    table_list.push(`${count} : ${entry}`);
+                    count = 1;
+                }
+            }
+        )
+
+        return table_list;
+    };
 }
 
 statement
-= a:(roll_statement / math_expression) {return a}
+= a:(
+  roll_statement
+/ math_expression
+/ list_table_expression
+) {return a}
+
+list_table_expression
+= 'list'i __ 'table'i __ table:table {return listTable(table)}
 
 roll_statement
-= 'roll'i __ a:(math_expression / table_expression) {return a}
+= 'roll'i __ math:math_expression {return math}
+/ 'roll'i __ table:table {return rollTable(table)}
 
 math_expression
 = a:term b:(_ ('+' / '-') _ term)* {return b.reduce((acc, tokens) => {
@@ -59,14 +85,6 @@ value
 
 dice_expression
 = quantity:[0-9]* 'd'i faces:[0-9]+ {var qty = joinInt(quantity); var size = joinInt(faces); return rollDice(Number.isNaN(qty) ? 1 : qty, size)}
-
-table_expression
-= a:(
-  'name_beginning'i
-/ 'name_middle'i
-/ 'name_end'i
-/ 'name'i
-) {return rollTable(a.toLowerCase())}
 
 _ 'optional whitespace'
 = [ \t\n\r]*
