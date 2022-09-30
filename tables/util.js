@@ -1,4 +1,4 @@
-namespce tables {
+Object.assign(tables, {
     name_beginning : [
         undefined,
         undefined,
@@ -77,4 +77,4 @@ namespce tables {
             return name[0].toUpperCase() + name.slice(1).toLowerCase();
         }
     ],
-}
+});

@@ -1,4 +1,4 @@
-namespace tables {
+Object.assign(tables, {
     dice6 : [
         () => '1',
         () => '2',
@@ -7,4 +7,4 @@ namespace tables {
         () => '5',
         () => '6',
     ],
-}
+});
