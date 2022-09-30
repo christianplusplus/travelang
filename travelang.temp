@@ -97,6 +97,6 @@ table
   'name_beginning'i
 / 'name_middle'i
 / 'name_end'i
-/ 'dice6'i
+/ 'monster'i
 / 'name'i
 ) {return a.toLowerCase()}

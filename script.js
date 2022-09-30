@@ -1,8 +1,9 @@
 function run(text) {
     try{
         var output = travelang.parse(text);
-        if(output instanceof Array)
+        if(output instanceof Array) {
             output = output.reduce((acc, val) => acc + '\n' + val);
+        }
         document.getElementById('output').innerHTML = output;
     }
     catch(e) {
